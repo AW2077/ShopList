@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MyApp</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="zakupy">Zakupy</string>
+    <string name="lod_wka">Lodówka</string>
+    <string name="przepisy">Przepisy</string>
+    <string name="FAB">Dodaj</string>
+</resources>
