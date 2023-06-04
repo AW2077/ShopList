@@ -4,20 +4,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapp.BottomSheetFragment;
 import com.example.myapp.Contact;
 import com.example.myapp.ContactsAdapter;
 import com.example.myapp.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FragmentZakupy extends Fragment {
     ArrayList<Contact> contacts;
@@ -43,7 +48,12 @@ public class FragmentZakupy extends Fragment {
         // Initialize contacts
         contacts = Contact.createContactsList(20);
         // Create adapter passing in the sample user data
-        ContactsAdapter adapter = new ContactsAdapter(contacts);
+        ContactsAdapter adapter = new ContactsAdapter(contacts, new ContactsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Contact contact) {
+                showBottomSheetDialog();
+            }
+        });
         // Attach the adapter to the recyclerview to populate items
         rvContacts.setAdapter(adapter);
         // Set layout manager to position the items
@@ -86,7 +96,7 @@ public class FragmentZakupy extends Fragment {
                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
                 // below line is to display our snackbar with action.
-                Snackbar.make(rvContacts, "Usunięto " + deletedCourse.getName(), Snackbar.LENGTH_LONG).setAction("Cofnij", new View.OnClickListener() {
+                Snackbar.make(rvContacts, "Usunięto " + deletedCourse.getName(), Snackbar.LENGTH_SHORT).setAction("Cofnij", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // adding on click listener to our action of snack bar.
@@ -103,6 +113,17 @@ public class FragmentZakupy extends Fragment {
             // to our recycler view.
         }).attachToRecyclerView(rvContacts);
 
+
         }
 
+    private void showBottomSheetDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
+
+        View view = getLayoutInflater().inflate(R.layout.fr_bottom_sheet, null);
+
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(view);
+        dialog.show();
+    }
 }

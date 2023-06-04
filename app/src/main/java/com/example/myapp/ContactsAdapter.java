@@ -1,4 +1,5 @@
 package com.example.myapp;
+import android.content.ClipData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,13 @@ import java.util.List;
 public class ContactsAdapter extends
         RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClick(Contact contact);
+    }
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
@@ -35,10 +39,12 @@ public class ContactsAdapter extends
 
     // Store a member variable for the contacts
     private List<Contact> mContacts;
+    private OnItemClickListener listener;
 
     // Pass in the contact array into the constructor
-    public ContactsAdapter(List<Contact> contacts) {
+    public ContactsAdapter(List<Contact> contacts, OnItemClickListener listener) {
         mContacts = contacts;
+        this.listener = listener;
     }
 
     @NonNull
@@ -68,6 +74,14 @@ public class ContactsAdapter extends
         Button button = holder.messageButton;
         button.setText(contact.isOnline() ? "Usuń" : "Usunięte");
         button.setEnabled(contact.isOnline());
+
+        View itemView = holder.itemView;
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(contact);
+            }
+        });
     }
 
     // Returns the total count of items in the list
@@ -75,4 +89,5 @@ public class ContactsAdapter extends
     public int getItemCount() {
         return mContacts.size();
     }
+
 }

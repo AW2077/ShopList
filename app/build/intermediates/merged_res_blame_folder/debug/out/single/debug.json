@@ -1,9 +1,5 @@
 [
     {
-        "merged": "com.example.myapp-merged_res-28:/layout_item_contact.xml.flat",
-        "source": "com.example.myapp-main-30:/layout/item_contact.xml"
-    },
-    {
         "merged": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-merged_res-28:\\mipmap-hdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-main-30:\\mipmap-hdpi\\ic_launcher.webp"
     },
@@ -60,6 +56,10 @@
         "source": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-main-30:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
+        "merged": "com.example.myapp-merged_res-28:/layout_fr_bottom_sheet.xml.flat",
+        "source": "com.example.myapp-main-30:/layout/fr_bottom_sheet.xml"
+    },
+    {
         "merged": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-merged_res-28:\\layout_fr_lodowka.xml.flat",
         "source": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-main-30:\\layout\\fr_lodowka.xml"
     },
@@ -98,6 +98,10 @@
     {
         "merged": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-merged_res-28:\\layout_fr_zakupy.xml.flat",
         "source": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-main-30:\\layout\\fr_zakupy.xml"
+    },
+    {
+        "merged": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-merged_res-28:\\layout_fr_bottom_sheet.xml.flat",
+        "source": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-main-30:\\layout\\fr_bottom_sheet.xml"
     },
     {
         "merged": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-merged_res-28:\\mipmap-mdpi_ic_launcher.webp.flat",

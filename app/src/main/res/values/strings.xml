@@ -5,4 +5,5 @@
     <string name="lod_wka">Lodówka</string>
     <string name="przepisy">Przepisy</string>
     <string name="FAB">Dodaj</string>
+    <string name="etUnitStr">Wpisz jednostkę</string>
 </resources>
