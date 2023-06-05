@@ -25,17 +25,17 @@ public final class FrZakupyBinding implements ViewBinding {
   public final FloatingActionButton floatingActionButton;
 
   @NonNull
-  public final RecyclerView rvContacts;
+  public final RecyclerView rvProducts;
 
   @NonNull
   public final TextView textView;
 
   private FrZakupyBinding(@NonNull FrameLayout rootView,
-      @NonNull FloatingActionButton floatingActionButton, @NonNull RecyclerView rvContacts,
+      @NonNull FloatingActionButton floatingActionButton, @NonNull RecyclerView rvProducts,
       @NonNull TextView textView) {
     this.rootView = rootView;
     this.floatingActionButton = floatingActionButton;
-    this.rvContacts = rvContacts;
+    this.rvProducts = rvProducts;
     this.textView = textView;
   }
 
@@ -72,9 +72,9 @@ public final class FrZakupyBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.rvContacts;
-      RecyclerView rvContacts = ViewBindings.findChildViewById(rootView, id);
-      if (rvContacts == null) {
+      id = R.id.rvProducts;
+      RecyclerView rvProducts = ViewBindings.findChildViewById(rootView, id);
+      if (rvProducts == null) {
         break missingId;
       }
 
@@ -84,7 +84,7 @@ public final class FrZakupyBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FrZakupyBinding((FrameLayout) rootView, floatingActionButton, rvContacts,
+      return new FrZakupyBinding((FrameLayout) rootView, floatingActionButton, rvProducts,
           textView);
     }
     String missingId = rootView.getResources().getResourceName(id);

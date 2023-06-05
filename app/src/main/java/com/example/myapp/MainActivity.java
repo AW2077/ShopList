@@ -4,15 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import com.example.myapp.databinding.ActivityMainBinding;
 import com.example.myapp.fragments.FragmentLodowka;
 import com.example.myapp.fragments.FragmentPrzepisy;
 import com.example.myapp.fragments.FragmentZakupy;
-
-import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;

@@ -1,7 +1,7 @@
 [
     {
-        "merged": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-mergeDebugResources-27:\\layout\\item_contact.xml",
-        "source": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-main-30:\\layout\\item_contact.xml"
+        "merged": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-mergeDebugResources-27:\\layout\\item_product.xml",
+        "source": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-main-30:\\layout\\item_product.xml"
     },
     {
         "merged": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-mergeDebugResources-27:\\layout\\fr_bottom_sheet.xml",
@@ -20,15 +20,11 @@
         "source": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-main-30:\\layout\\fr_przepisy.xml"
     },
     {
-        "merged": "com.example.myapp-mergeDebugResources-27:/layout/fr_bottom_sheet.xml",
-        "source": "com.example.myapp-main-30:/layout/fr_bottom_sheet.xml"
-    },
-    {
         "merged": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-mergeDebugResources-27:\\layout\\fr_lodowka.xml",
         "source": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-main-30:\\layout\\fr_lodowka.xml"
     },
     {
-        "merged": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-mergeDebugResources-27:\\layout\\update_product.xml",
-        "source": "C:\\Users\\agawl\\.gradle\\daemon\\8.0\\com.example.myapp-main-30:\\layout\\update_product.xml"
+        "merged": "com.example.myapp-mergeDebugResources-27:/layout/item_product.xml",
+        "source": "com.example.myapp-main-30:/layout/item_product.xml"
     }
 ]

@@ -1,31 +1,33 @@
 package com.example.myapp.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapp.BottomSheetFragment;
-import com.example.myapp.Contact;
-import com.example.myapp.ContactsAdapter;
+import com.example.myapp.Product;
+import com.example.myapp.ProductsAdapter;
 import com.example.myapp.R;
+import com.example.myapp.database.SQLiteManager;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class FragmentZakupy extends Fragment {
-    ArrayList<Contact> contacts;
+public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProductClickListener {
+    ArrayList<Product> products = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,31 +44,37 @@ public class FragmentZakupy extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView rvContacts = view.findViewById(R.id.rvContacts);
+        RecyclerView rvProducts = view.findViewById(R.id.rvProducts);
         FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
 
+        loadFromDBToMemory();
+
         // Initialize contacts
-        contacts = Contact.createContactsList(20);
-        // Create adapter passing in the sample user data
-        ContactsAdapter adapter = new ContactsAdapter(contacts, new ContactsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Contact contact) {
-                showBottomSheetDialog();
-            }
-        });
-        // Attach the adapter to the recyclerview to populate items
-        rvContacts.setAdapter(adapter);
-        // Set layout manager to position the items
-        rvContacts.setLayoutManager(new LinearLayoutManager(getContext()));
-        // That's all!
+        products.add(new Product("test", R.drawable.ic_recipe, 1, "1", "kg"));
+        products.add(new Product("test", R.drawable.ic_recipe, 1, "2", "kg"));
+        products.add(new Product("tesdfdst", R.drawable.ic_launcher_background, 1, "13", "kg"));
+        products.add(new Product("test", R.drawable.ic_recipe, 1, "134", "kg"));
+        products.add(new Product("testsdfsdf", R.drawable.ic_recipe, 1, "142", "kg"));
+        products.add(new Product("test", R.drawable.ic_launcher_background, 1, "121", "kg"));
+        products.add(new Product("tesfsdfdfst", R.drawable.ic_recipe, 1, "123", "kg"));
+        products.add(new Product("test", R.drawable.ic_recipe, 1, "1423", "kg"));
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvProducts.setLayoutManager(layoutManager);
+        rvProducts.addItemDecoration(new DividerItemDecoration(requireContext(),layoutManager.getOrientation()));
+
+        ProductsAdapter adapter = new ProductsAdapter(products, this);
+        rvProducts.setAdapter(adapter);
+
 
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                contacts.add(0, new Contact("new", true));
+                Product newproduct = new Product("new", R.drawable.ic_recipe, 1, "1423", "kg");
+                products.add(0, newproduct);
                 adapter.notifyItemInserted(0);
-                rvContacts.smoothScrollToPosition(0);
+                rvProducts.smoothScrollToPosition(0);
             }
         });
 
@@ -82,7 +90,7 @@ public class FragmentZakupy extends Fragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction){
                 // this method is called when we swipe our item to right direction.
                 // on below line we are getting the item at a particular position.
-                Contact deletedCourse = contacts.get(viewHolder.getAdapterPosition());
+                Product deletedProduct = products.get(viewHolder.getAdapterPosition());
 
                 // below line is to get the position
                 // of the item at that position.
@@ -90,18 +98,18 @@ public class FragmentZakupy extends Fragment {
 
                 // this method is called when item is swiped.
                 // below line is to remove item from our array list.
-                contacts.remove(viewHolder.getAdapterPosition());
+                products.remove(viewHolder.getAdapterPosition());
 
                 // below line is to notify our item is removed from adapter.
                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
                 // below line is to display our snackbar with action.
-                Snackbar.make(rvContacts, "Usunięto " + deletedCourse.getName(), Snackbar.LENGTH_SHORT).setAction("Cofnij", new View.OnClickListener() {
+                Snackbar.make(rvProducts, "Usunięto " + deletedProduct.getName(), Snackbar.LENGTH_SHORT).setAction("Cofnij", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // adding on click listener to our action of snack bar.
                         // below line is to add our item to array list with a position.
-                        contacts.add(position, deletedCourse);
+                        products.add(position, deletedProduct);
 
                         // below line is to notify item is
                         // added to our adapter class.
@@ -111,19 +119,49 @@ public class FragmentZakupy extends Fragment {
             }
             // at last we are adding this
             // to our recycler view.
-        }).attachToRecyclerView(rvContacts);
+        }).attachToRecyclerView(rvProducts);
 
 
         }
 
-    private void showBottomSheetDialog() {
-        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
+    private void loadFromDBToMemory() {
+        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(this.getContext());
+//        sqLiteManager.populateProductListArray(); crashuje
 
+    }
+
+    @Override
+    public void onProductClick(int position) {
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
         View view = getLayoutInflater().inflate(R.layout.fr_bottom_sheet, null);
+
+        EditText etName = dialog.findViewById(R.id.etEditProductName);
+        EditText etNum = dialog.findViewById(R.id.etEditNum);
+        EditText etUnit = dialog.findViewById(R.id.etEditUnit);
+        Button btnUpdate = dialog.findViewById(R.id.btnUpdate);
+
+/*        etName.setText(products.get(position).getName());
+        etNum.setText(products.get(position).getUnitNum());
+        etUnit.setText(products.get(position).getUnit());
+
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = "", num = "", unit = "";
+                name = etName.getText().toString();
+                num = etNum.getText().toString();
+                unit = etUnit.getText().toString();
+
+                products.set(position, new Product(name, num, unit));
+
+            }
+        });*/
 
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         dialog.setContentView(view);
         dialog.show();
+
     }
 }

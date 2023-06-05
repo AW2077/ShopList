@@ -3110,6 +3110,7 @@ id cache_measures
 id callMeasure
 id cancel_button
 id carryVelocity
+id category_icon
 id center
 id centerCrop
 id centerInside
@@ -3118,6 +3119,7 @@ id center_vertical
 id chain
 id chain2
 id chains
+id checkBox_product
 id checkbox
 id checked
 id chronometer
@@ -3131,7 +3133,6 @@ id collapseActionView
 id compress
 id confirm_button
 id constraint
-id contact_name
 id container
 id content
 id contentPanel
@@ -3278,7 +3279,6 @@ id material_timepicker_view
 id material_value_index
 id matrix
 id message
-id message_button
 id middle
 id mini
 id month_grid
@@ -3354,6 +3354,7 @@ id pin
 id position
 id postLayout
 id pressed
+id product_name
 id progress_circular
 id progress_horizontal
 id radio
@@ -3366,7 +3367,7 @@ id right_icon
 id right_side
 id rounded
 id row_index_key
-id rvContacts
+id rvProducts
 id save_non_transition_alpha
 id save_overlay_view
 id sawtooth
@@ -3646,7 +3647,7 @@ layout fr_bottom_sheet
 layout fr_lodowka
 layout fr_przepisy
 layout fr_zakupy
-layout item_contact
+layout item_product
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
