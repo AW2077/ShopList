@@ -1,12 +1,14 @@
 package com.example.myapp.fragments;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -28,15 +30,31 @@ import java.util.ArrayList;
 
 public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProductClickListener {
     ArrayList<Product> products = new ArrayList<>();
+    SQLiteManager sqLiteManager;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        sqLiteManager = new SQLiteManager(this.getContext());
+        SQLiteDatabase sqLiteDatabase = sqLiteManager.getWritableDatabase();
+        loadFromDBToMemory();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+        sqLiteManager = new SQLiteManager(this.getContext());
+        SQLiteDatabase sqLiteDatabase = sqLiteManager.getWritableDatabase();
+        loadFromDBToMemory();
         return inflater.inflate(R.layout.fr_zakupy, container, false);
     }
 
@@ -47,9 +65,10 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
         RecyclerView rvProducts = view.findViewById(R.id.rvProducts);
         FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
 
-        loadFromDBToMemory();
 
-        // Initialize contacts
+
+
+        // Initialize
         products.add(new Product("test", R.drawable.ic_recipe, 1, "1", "kg"));
         products.add(new Product("test", R.drawable.ic_recipe, 1, "2", "kg"));
         products.add(new Product("tesdfdst", R.drawable.ic_launcher_background, 1, "13", "kg"));
@@ -71,10 +90,14 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(getContext());
                 Product newproduct = new Product("new", R.drawable.ic_recipe, 1, "1423", "kg");
                 products.add(0, newproduct);
                 adapter.notifyItemInserted(0);
                 rvProducts.smoothScrollToPosition(0);
+
+                sqLiteManager.addProductToDatabase(newproduct);
+
             }
         });
 
@@ -126,7 +149,7 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
 
     private void loadFromDBToMemory() {
         SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(this.getContext());
-//        sqLiteManager.populateProductListArray(); crashuje
+        sqLiteManager.populateProductListArray();
 
     }
 

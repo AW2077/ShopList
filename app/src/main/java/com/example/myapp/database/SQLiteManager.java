@@ -21,7 +21,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
     private static final String ID_FIELD = "id";
     private static final String TITLE_FIELD = "name";
     private static final String ICON_FIELD = "icon";
-    private static final String CHECK_FIELD = "check";
+    private static final String CHECK_FIELD = "checked";
     private static final String UNIT_FIELD = "unit";
     private static final String NUM_FIELD = "num";
 
@@ -39,26 +39,16 @@ public class SQLiteManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        StringBuilder sql;
-        sql = new StringBuilder()
-                .append("CREATE TABLE")
-                .append(TABLE_NAME)
-                .append("(")
-                .append(COUNTER)
-                .append(" INTEGER PRIMARY KEY AUTOINCREMENT, ")
-                .append(ID_FIELD)
-                .append(" INT, ")
-                .append(TITLE_FIELD)
-                .append(" TEXT, ")
-                .append(ICON_FIELD)
-                .append(" INT, ")
-                .append(CHECK_FIELD)
-                .append(" INT, ")
-                .append(UNIT_FIELD)
-                .append(" TEXT, ")
-                .append(NUM_FIELD)
-                .append(" TEXT)");
-        db.execSQL(sql.toString());
+        String query ="CREATE TABLE " +  TABLE_NAME + "(" +
+                COUNTER + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ID_FIELD + " INT, " +
+                TITLE_FIELD + " TEXT, " +
+                ICON_FIELD + " INT, " +
+                CHECK_FIELD + " INT, " +
+                UNIT_FIELD + " TEXT, " +
+                NUM_FIELD + " TEXT) ";
+
+        db.execSQL(query);
 
 
     }
