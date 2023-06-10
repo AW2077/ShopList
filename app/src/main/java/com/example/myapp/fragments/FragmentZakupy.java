@@ -1,12 +1,15 @@
 package com.example.myapp.fragments;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -56,7 +59,7 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
         rvProducts.setLayoutManager(layoutManager);
         rvProducts.addItemDecoration(new DividerItemDecoration(requireContext(),layoutManager.getOrientation()));
 
-        ProductsAdapter adapter = new ProductsAdapter(getContext(), allProducts, this);
+        ProductsAdapter adapter = new ProductsAdapter(getContext(), allProducts, this, getAllItems());
         rvProducts.setAdapter(adapter);
 
 
@@ -94,7 +97,7 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
 
                 // this method is called when item is swiped.
                 // below line is to remove item from our array list.
-                mDatabase.deleteProductInDatabase(adapter.getItemId(viewHolder.getAdapterPosition()));
+                mDatabase.deleteProductInDatabase((Long) viewHolder.itemView.getTag());
                 allProducts.remove(viewHolder.getAdapterPosition());
                 // below line is to notify our item is removed from adapter.
                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
@@ -121,6 +124,10 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
 
 
         }
+
+    private Cursor getAllItems() {
+        return mDatabase.getReadableDatabase().query(DatabaseHelper.TABLE_NAME, null, null, null, null, null, null);
+    }
 
     @Override
     public void onProductClick(int position) {

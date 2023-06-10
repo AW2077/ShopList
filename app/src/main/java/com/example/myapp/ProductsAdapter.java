@@ -1,5 +1,7 @@
 package com.example.myapp;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +24,15 @@ public class ProductsAdapter extends
     private ArrayList<Product> listProducts;
     private OnProductClickListener mOnProdListener;
     private DatabaseHelper mDatabase;
+    private Cursor mCursor;
 
-    public ProductsAdapter(Context context, ArrayList<Product> listProducts, OnProductClickListener onProductClickListener) {
+    public ProductsAdapter(Context context, ArrayList<Product> listProducts, OnProductClickListener onProductClickListener, Cursor cursor) {
         this.context = context;
         this.listProducts = listProducts;
         this.mProducts = listProducts;
         mOnProdListener = onProductClickListener;
         mDatabase = new DatabaseHelper(context);
+        mCursor = cursor;
 
     }
 
@@ -70,14 +74,22 @@ public class ProductsAdapter extends
     // Involves populating data into the item through holder
     @Override
     public void onBindViewHolder(ProductsAdapter.ViewHolder holder, int position) {
+        if (!mCursor.moveToPosition(position)) {
+            return;
+        }
+
         // Get the data model based on position
         final Product product = listProducts.get(position);
+
+        @SuppressLint("Range") long id = mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper.COUNTER));
 
         // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
         textView.setText(product.getName());
         ImageView imageView = holder.categoryIcon;
         imageView.setVisibility(View.VISIBLE);
+
+        holder.itemView.setTag(id);
     }
 
     @Override
