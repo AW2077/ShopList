@@ -40,7 +40,7 @@ public class SQLiteManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query ="CREATE TABLE " +  TABLE_NAME + "(" +
-                COUNTER + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COUNTER + " INTEGER PRIMARY KEY, " +
                 ID_FIELD + " INT, " +
                 TITLE_FIELD + " TEXT, " +
                 ICON_FIELD + " INT, " +

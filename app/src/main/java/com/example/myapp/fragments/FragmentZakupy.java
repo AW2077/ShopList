@@ -35,16 +35,11 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
     @Override
     public void onResume() {
         super.onResume();
-
-        sqLiteManager = new SQLiteManager(this.getContext());
-        SQLiteDatabase sqLiteDatabase = sqLiteManager.getWritableDatabase();
-        loadFromDBToMemory();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         }
 
     @Override
@@ -69,14 +64,14 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
 
 
         // Initialize
-        products.add(new Product("test", R.drawable.ic_recipe, 1, "1", "kg"));
+/*        products.add(new Product("test", R.drawable.ic_recipe, 1, "1", "kg"));
         products.add(new Product("test", R.drawable.ic_recipe, 1, "2", "kg"));
         products.add(new Product("tesdfdst", R.drawable.ic_launcher_background, 1, "13", "kg"));
         products.add(new Product("test", R.drawable.ic_recipe, 1, "134", "kg"));
         products.add(new Product("testsdfsdf", R.drawable.ic_recipe, 1, "142", "kg"));
         products.add(new Product("test", R.drawable.ic_launcher_background, 1, "121", "kg"));
         products.add(new Product("tesfsdfdfst", R.drawable.ic_recipe, 1, "123", "kg"));
-        products.add(new Product("test", R.drawable.ic_recipe, 1, "1423", "kg"));
+        products.add(new Product("test", R.drawable.ic_recipe, 1, "1423", "kg"));*/
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvProducts.setLayoutManager(layoutManager);

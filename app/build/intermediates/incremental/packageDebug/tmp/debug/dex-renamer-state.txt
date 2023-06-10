@@ -1,10 +1,10 @@
-#Tue Jun 06 14:37:20 CEST 2023
-base.0=C\:\\Users\\awlodawi\\Documents\\ApkaShop\\ShopList\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-base.1=C\:\\Users\\awlodawi\\Documents\\ApkaShop\\ShopList\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.2=C\:\\Users\\awlodawi\\Documents\\ApkaShop\\ShopList\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
-base.3=C\:\\Users\\awlodawi\\Documents\\ApkaShop\\ShopList\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
-base.4=C\:\\Users\\awlodawi\\Documents\\ApkaShop\\ShopList\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
-base.5=C\:\\Users\\awlodawi\\Documents\\ApkaShop\\ShopList\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
+#Sat Jun 10 16:41:02 CEST 2023
+base.0=C\:\\Users\\agawl\\AndroidStudioProjects\\MyApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\agawl\\AndroidStudioProjects\\MyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.2=C\:\\Users\\agawl\\AndroidStudioProjects\\MyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
+base.3=C\:\\Users\\agawl\\AndroidStudioProjects\\MyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
+base.4=C\:\\Users\\agawl\\AndroidStudioProjects\\MyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
+base.5=C\:\\Users\\agawl\\AndroidStudioProjects\\MyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.2=10/classes.dex
