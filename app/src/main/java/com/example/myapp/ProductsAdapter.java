@@ -1,5 +1,6 @@
 package com.example.myapp;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,14 +8,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapp.database.DatabaseHelper;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsAdapter extends
         RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
 
-    private List<Product> mProducts;
+    private Context context;
+    private ArrayList<Product> mProducts;
+    private ArrayList<Product> listProducts;
     private OnProductClickListener mOnProdListener;
+    private DatabaseHelper mDatabase;
 
+    public ProductsAdapter(Context context, ArrayList<Product> listProducts, OnProductClickListener onProductClickListener) {
+        this.context = context;
+        this.listProducts = listProducts;
+        this.mProducts = listProducts;
+        mOnProdListener = onProductClickListener;
+        mDatabase = new DatabaseHelper(context);
+
+    }
 
     public interface OnProductClickListener {
         void onProductClick(int position);
@@ -40,10 +56,7 @@ public class ProductsAdapter extends
         }
     }
 
-    public ProductsAdapter(List<Product> products, OnProductClickListener onProductClickListener) {
-        mProducts = products;
-        mOnProdListener = onProductClickListener;
-    }
+
 
     @NonNull
     @Override
@@ -58,7 +71,7 @@ public class ProductsAdapter extends
     @Override
     public void onBindViewHolder(ProductsAdapter.ViewHolder holder, int position) {
         // Get the data model based on position
-        Product product = mProducts.get(position);
+        final Product product = listProducts.get(position);
 
         // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
@@ -69,7 +82,7 @@ public class ProductsAdapter extends
 
     @Override
     public int getItemCount() {
-        return mProducts.size();
+        return listProducts.size();
     }
 
 }

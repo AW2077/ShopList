@@ -1,19 +1,14 @@
 package com.example.myapp;
 
-import java.util.ArrayList;
-
 public class Product {
-    public static ArrayList<Product> productArrayList = new ArrayList<>();
 
-    private int id;
     private String mName;
     private int catIcon;
     private int mChecked;
     private String mUnit;
     private String unitNum;
 
-    public Product(int id, String mName, int catIcon, int mChecked, String unitNum, String mUnit) {
-        this.id = id;
+    public Product(String mName, int catIcon, int mChecked, String mUnit, String unitNum) {
         this.mName = mName;
         this.catIcon = catIcon;
         this.mChecked = mChecked;
@@ -21,26 +16,10 @@ public class Product {
         this.unitNum = unitNum;
     }
 
-    public Product(String mName, int catIcon, int mChecked, String unitNum, String mUnit) {
-        this.mName = mName;
-        this.catIcon = catIcon;
-        this.mChecked = mChecked;
-        this.mUnit = mUnit;
-        this.unitNum = unitNum;
-    }
-
-    public Product(String mName, String unitNum, String  mUnit) {
+    public Product(String mName, String  mUnit, String unitNum) {
         this.mName = mName;
         this.mUnit = mUnit;
         this.unitNum = unitNum;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
