@@ -74,29 +74,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(UNIT_FIELD, product.getUnit());
         contentValues.put(NUM_FIELD, product.getUnitNum());
 
-
         return sqLiteDatabase.update(TABLE_NAME, contentValues, COUNTER + " = " +  id, null);
     }
-
-/*    public void populateProductListArray() {
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-
-        try (Cursor result = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null)) {
-            if (result.getCount() != 0) {
-                while (result.moveToNext()) {
-                    int id = result.getInt(1);
-                    String title = result.getString(2);
-                    int icon = result.getInt(3);
-                    String unit = result.getString(4);
-                    String num = result.getString(5);
-                    int checked = result.getInt(6);
-                    Product product = new Product(id, title, icon, checked, unit, num);
-                    Product.productArrayList.add(product);
-
-                }
-            }
-        }
-    }*/
 
     public ArrayList<Product> listProducts() {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -111,8 +90,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String num = cursor.getString(5);
                 Product product = new Product(title, icon, checked, unit, num);
                 storedProducts.add(product);
-
-
             }
 
         }

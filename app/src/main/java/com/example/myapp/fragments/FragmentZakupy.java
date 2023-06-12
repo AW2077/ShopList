@@ -5,11 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -21,13 +16,12 @@ import com.example.myapp.Product;
 import com.example.myapp.ProductsAdapter;
 import com.example.myapp.R;
 import com.example.myapp.database.DatabaseHelper;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProductClickListener {
+public class FragmentZakupy extends Fragment {
     private DatabaseHelper mDatabase;
 
     @Override
@@ -59,7 +53,7 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
         rvProducts.setLayoutManager(layoutManager);
         rvProducts.addItemDecoration(new DividerItemDecoration(requireContext(),layoutManager.getOrientation()));
 
-        ProductsAdapter adapter = new ProductsAdapter(getContext(), allProducts, this, getAllItems());
+        ProductsAdapter adapter = new ProductsAdapter(getContext(), allProducts, getAllItems());
         rvProducts.setAdapter(adapter);
 
 
@@ -67,7 +61,7 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Product newproduct = new Product("new", R.drawable.ic_recipe, 1, "kg", "165");
+                Product newproduct = new Product("nowy produkt", R.drawable.ic_recipe, 1, null, "0");
                 allProducts.add(0, newproduct);
                 adapter.notifyItemInserted(0);
                 rvProducts.smoothScrollToPosition(0);
@@ -80,8 +74,6 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                // this method is called
-                // when the item is moved.
                 return false;
             }
 
@@ -129,7 +121,7 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
         return mDatabase.getReadableDatabase().query(DatabaseHelper.TABLE_NAME, null, null, null, null, null, null);
     }
 
-    @Override
+    /*@Override
     public void onProductClick(int position) {
         BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
         View view = getLayoutInflater().inflate(R.layout.fr_bottom_sheet, null);
@@ -139,7 +131,7 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
         EditText etUnit = dialog.findViewById(R.id.etEditUnit);
         Button btnUpdate = dialog.findViewById(R.id.btnUpdate);
 
-/*        etName.setText(products.get(position).getName());
+*//*        etName.setText(products.get(position).getName());
         etNum.setText(products.get(position).getUnitNum());
         etUnit.setText(products.get(position).getUnit());
 
@@ -155,14 +147,14 @@ public class FragmentZakupy extends Fragment implements ProductsAdapter.OnProduc
                 products.set(position, new Product(name, num, unit));
 
             }
-        });*/
+        });*//*
 
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         dialog.setContentView(view);
         dialog.show();
 
-    }
+    }*/
 
     @Override
     public void onDestroy() {

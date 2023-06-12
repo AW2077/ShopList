@@ -6,4 +6,7 @@
     <string name="przepisy">Przepisy</string>
     <string name="FAB">Dodaj</string>
     <string name="etUnitStr">Wpisz jednostkę</string>
+    <string name="hintNum">Podaj ilość</string>
+    <string name="hintName">Wpisz produkt</string>
+    <string name="btnUpdate">Zatwierdź</string>
 </resources>

@@ -1,20 +1,27 @@
 package com.example.myapp;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapp.database.DatabaseHelper;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductsAdapter extends
         RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
@@ -26,11 +33,10 @@ public class ProductsAdapter extends
     private DatabaseHelper mDatabase;
     private Cursor mCursor;
 
-    public ProductsAdapter(Context context, ArrayList<Product> listProducts, OnProductClickListener onProductClickListener, Cursor cursor) {
+    public ProductsAdapter(Context context, ArrayList<Product> listProducts, Cursor cursor) {
         this.context = context;
         this.listProducts = listProducts;
         this.mProducts = listProducts;
-        mOnProdListener = onProductClickListener;
         mDatabase = new DatabaseHelper(context);
         mCursor = cursor;
 
@@ -71,25 +77,73 @@ public class ProductsAdapter extends
         return new ViewHolder(contactView, mOnProdListener);
     }
 
-    // Involves populating data into the item through holder
     @Override
     public void onBindViewHolder(ProductsAdapter.ViewHolder holder, int position) {
         if (!mCursor.moveToPosition(position)) {
             return;
         }
 
-        // Get the data model based on position
         final Product product = listProducts.get(position);
-
         @SuppressLint("Range") long id = mCursor.getLong(mCursor.getColumnIndex(DatabaseHelper.COUNTER));
 
-        // Set item views based on your views and data model
-        TextView textView = holder.nameTextView;
-        textView.setText(product.getName());
+        holder.nameTextView.setText(product.getName());
+
         ImageView imageView = holder.categoryIcon;
         imageView.setVisibility(View.VISIBLE);
 
         holder.itemView.setTag(id);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editProductBottomSheet(id, product);
+            }
+        });
+    }
+
+    private void editProductBottomSheet(long id, final Product product) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View subview = inflater.inflate(R.layout.fr_bottom_sheet, null);
+
+        Button btnUpdate = subview.findViewById(R.id.btnUpdate);
+        final EditText etName = subview.findViewById(R.id.etEditProductName);
+        final EditText etNum = subview.findViewById(R.id.etEditNum);
+        final EditText etUnit = subview.findViewById(R.id.etEditUnit);
+
+        if (product != null){
+            etName.setText(product.getName());
+            etNum.setText(String.valueOf(product.getUnitNum()));
+            etUnit.setText(product.getUnit());
+        }
+
+        BottomSheetDialog dialog = new BottomSheetDialog(context);
+        dialog.setContentView(subview);
+
+
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String name = etName.getText().toString();
+                final String num = etNum.getText().toString();
+                final String unit = etUnit.getText().toString();
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(context, "Something went wrong. Check your input values", Toast.LENGTH_LONG).show();
+                } else {
+                    mDatabase.updateProductInDatabase(id, new Product(name, unit, num));
+                    ((Activity) context).finish();
+                    context.startActivity(((Activity)
+                            context).getIntent());
+                       // TODO: przenieść gdzieś gdzie adapter notify działa
+                }
+
+            }
+        });
+
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+
+        dialog.show();
+
     }
 
     @Override

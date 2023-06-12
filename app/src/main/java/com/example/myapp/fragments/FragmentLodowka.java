@@ -1,62 +1,166 @@
 package com.example.myapp.fragments;
 
+import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapp.Product;
+import com.example.myapp.ProductsAdapter;
 import com.example.myapp.R;
+import com.example.myapp.database.DatabaseHelperFridge;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 
 public class FragmentLodowka extends Fragment {
+    private DatabaseHelperFridge mDatabase;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public FragmentLodowka() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentLodowka.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentLodowka newInstance(String param1, String param2) {
-        FragmentLodowka fragment = new FragmentLodowka();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fr_lodowka, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        mDatabase = new DatabaseHelperFridge(this.getContext());
+        ArrayList<Product> allProducts = mDatabase.listProducts();
+        RecyclerView rvProducts = view.findViewById(R.id.rvProducts2);
+        FloatingActionButton fab = view.findViewById(R.id.floatingActionButton2);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvProducts.setLayoutManager(layoutManager);
+        rvProducts.addItemDecoration(new DividerItemDecoration(requireContext(),layoutManager.getOrientation()));
+
+        ProductsAdapter adapter = new ProductsAdapter(getContext(), allProducts, getAllItems());
+        rvProducts.setAdapter(adapter);
+
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Product newproduct = new Product("nowy produkt", R.drawable.ic_recipe, 1, null, "0");
+                allProducts.add(0, newproduct);
+                adapter.notifyItemInserted(0);
+                rvProducts.smoothScrollToPosition(0);
+
+                mDatabase.addProductToDatabase(newproduct);
+
+            }
+        });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction){
+                // this method is called when we swipe our item to right direction.
+                // on below line we are getting the item at a particular position.
+                Product deletedProduct = allProducts.get(viewHolder.getAdapterPosition());
+
+                // below line is to get the position
+                // of the item at that position.
+                int position = viewHolder.getAdapterPosition();
+
+                // this method is called when item is swiped.
+                // below line is to remove item from our array list.
+                mDatabase.deleteProductInDatabase((Long) viewHolder.itemView.getTag());
+                allProducts.remove(viewHolder.getAdapterPosition());
+                // below line is to notify our item is removed from adapter.
+                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
+
+                // below line is to display our snackbar with action.
+                Snackbar.make(rvProducts, "Usunięto " + deletedProduct.getName(), Snackbar.LENGTH_SHORT).setAction("Cofnij", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // adding on click listener to our action of snack bar.
+                        // below line is to add our item to array list with a position.
+                        allProducts.add(position, deletedProduct);
+
+                        // below line is to notify item is
+                        // added to our adapter class.
+                        adapter.notifyItemInserted(position);
+                        mDatabase.addProductToDatabase(deletedProduct);
+                    }
+                }).show();
+            }
+            // at last we are adding this
+            // to our recycler view.
+        }).attachToRecyclerView(rvProducts);
+
+
+    }
+
+    private Cursor getAllItems() {
+        return mDatabase.getReadableDatabase().query(DatabaseHelperFridge.TABLE_NAME, null, null, null, null, null, null);
+    }
+
+    /*@Override
+    public void onProductClick(int position) {
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
+        View view = getLayoutInflater().inflate(R.layout.fr_bottom_sheet, null);
+
+        EditText etName = dialog.findViewById(R.id.etEditProductName);
+        EditText etNum = dialog.findViewById(R.id.etEditNum);
+        EditText etUnit = dialog.findViewById(R.id.etEditUnit);
+        Button btnUpdate = dialog.findViewById(R.id.btnUpdate);
+
+*//*        etName.setText(products.get(position).getName());
+        etNum.setText(products.get(position).getUnitNum());
+        etUnit.setText(products.get(position).getUnit());
+
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = "", num = "", unit = "";
+                name = etName.getText().toString();
+                num = etNum.getText().toString();
+                unit = etUnit.getText().toString();
+
+                products.set(position, new Product(name, num, unit));
+
+            }
+        });*//*
+
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(view);
+        dialog.show();
+
+    }*/
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mDatabase != null) {
+            mDatabase.close();
+        }
     }
 }

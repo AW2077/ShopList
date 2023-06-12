@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -21,6 +22,9 @@ public final class FrBottomSheetBinding implements ViewBinding {
   private final CoordinatorLayout rootView;
 
   @NonNull
+  public final ConstraintLayout btmSheetLayout;
+
+  @NonNull
   public final MaterialButton btnUpdate;
 
   @NonNull
@@ -33,9 +37,11 @@ public final class FrBottomSheetBinding implements ViewBinding {
   public final TextInputEditText etEditUnit;
 
   private FrBottomSheetBinding(@NonNull CoordinatorLayout rootView,
-      @NonNull MaterialButton btnUpdate, @NonNull TextInputEditText etEditNum,
-      @NonNull TextInputEditText etEditProductName, @NonNull TextInputEditText etEditUnit) {
+      @NonNull ConstraintLayout btmSheetLayout, @NonNull MaterialButton btnUpdate,
+      @NonNull TextInputEditText etEditNum, @NonNull TextInputEditText etEditProductName,
+      @NonNull TextInputEditText etEditUnit) {
     this.rootView = rootView;
+    this.btmSheetLayout = btmSheetLayout;
     this.btnUpdate = btnUpdate;
     this.etEditNum = etEditNum;
     this.etEditProductName = etEditProductName;
@@ -69,6 +75,12 @@ public final class FrBottomSheetBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btmSheetLayout;
+      ConstraintLayout btmSheetLayout = ViewBindings.findChildViewById(rootView, id);
+      if (btmSheetLayout == null) {
+        break missingId;
+      }
+
       id = R.id.btnUpdate;
       MaterialButton btnUpdate = ViewBindings.findChildViewById(rootView, id);
       if (btnUpdate == null) {
@@ -93,8 +105,8 @@ public final class FrBottomSheetBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FrBottomSheetBinding((CoordinatorLayout) rootView, btnUpdate, etEditNum,
-          etEditProductName, etEditUnit);
+      return new FrBottomSheetBinding((CoordinatorLayout) rootView, btmSheetLayout, btnUpdate,
+          etEditNum, etEditProductName, etEditUnit);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

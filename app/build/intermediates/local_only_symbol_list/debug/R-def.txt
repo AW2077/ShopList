@@ -8,6 +8,7 @@ drawable ic_launcher_foreground
 drawable ic_recipe
 drawable ic_shopping_bag
 id bottomNavigationView
+id btmSheetLayout
 id btnUpdate
 id category_icon
 id checkBox_product
@@ -16,13 +17,16 @@ id etEditNum
 id etEditProductName
 id etEditUnit
 id floatingActionButton
+id floatingActionButton2
 id frameLayoutId
 id navigation_lodowka
 id navigation_przepisy
 id navigation_zakupy
 id product_name
 id rvProducts
+id rvProducts2
 id textView
+id textView2
 layout activity_main
 layout fr_bottom_sheet
 layout fr_lodowka
@@ -34,8 +38,11 @@ mipmap ic_launcher
 mipmap ic_launcher_round
 string FAB
 string app_name
+string btnUpdate
 string etUnitStr
 string hello_blank_fragment
+string hintName
+string hintNum
 string lod_wka
 string przepisy
 string zakupy

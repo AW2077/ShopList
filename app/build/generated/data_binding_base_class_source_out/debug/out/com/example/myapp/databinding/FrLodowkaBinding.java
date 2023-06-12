@@ -5,19 +5,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
+import androidx.viewbinding.ViewBindings;
 import com.example.myapp.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.lang.NullPointerException;
 import java.lang.Override;
+import java.lang.String;
 
 public final class FrLodowkaBinding implements ViewBinding {
   @NonNull
   private final FrameLayout rootView;
 
-  private FrLodowkaBinding(@NonNull FrameLayout rootView) {
+  @NonNull
+  public final FloatingActionButton floatingActionButton2;
+
+  @NonNull
+  public final RecyclerView rvProducts2;
+
+  @NonNull
+  public final TextView textView2;
+
+  private FrLodowkaBinding(@NonNull FrameLayout rootView,
+      @NonNull FloatingActionButton floatingActionButton2, @NonNull RecyclerView rvProducts2,
+      @NonNull TextView textView2) {
     this.rootView = rootView;
+    this.floatingActionButton2 = floatingActionButton2;
+    this.rvProducts2 = rvProducts2;
+    this.textView2 = textView2;
   }
 
   @Override
@@ -43,10 +62,32 @@ public final class FrLodowkaBinding implements ViewBinding {
 
   @NonNull
   public static FrLodowkaBinding bind(@NonNull View rootView) {
-    if (rootView == null) {
-      throw new NullPointerException("rootView");
-    }
+    // The body of this method is generated in a way you would not otherwise write.
+    // This is done to optimize the compiled bytecode for size and performance.
+    int id;
+    missingId: {
+      id = R.id.floatingActionButton2;
+      FloatingActionButton floatingActionButton2 = ViewBindings.findChildViewById(rootView, id);
+      if (floatingActionButton2 == null) {
+        break missingId;
+      }
 
-    return new FrLodowkaBinding((FrameLayout) rootView);
+      id = R.id.rvProducts2;
+      RecyclerView rvProducts2 = ViewBindings.findChildViewById(rootView, id);
+      if (rvProducts2 == null) {
+        break missingId;
+      }
+
+      id = R.id.textView2;
+      TextView textView2 = ViewBindings.findChildViewById(rootView, id);
+      if (textView2 == null) {
+        break missingId;
+      }
+
+      return new FrLodowkaBinding((FrameLayout) rootView, floatingActionButton2, rvProducts2,
+          textView2);
+    }
+    String missingId = rootView.getResources().getResourceName(id);
+    throw new NullPointerException("Missing required view with ID: ".concat(missingId));
   }
 }
